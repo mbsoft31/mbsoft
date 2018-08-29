@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Media;
 use App\Http\Resources\Medias;
+use Illuminate\Support\Facades\Storage;
 
 class MediaController extends Controller
 {
@@ -29,7 +30,21 @@ class MediaController extends Controller
     public function store(Request $request)
     {
         //
-        $media = Media::create($request->all());
+        $request->validate([
+            'fileToUpload' => 'required|file|max:1024',
+        ]);
+     
+        $fileName = "fileName".time().'.'.$request->fileToUpload->getClientOriginalExtension();
+
+        $path = $request->fileToUpload->storeAs('public/logos',$fileName);
+
+        $media = Media::create([
+            'name' => $fileName,
+            'type' => $request->fileToUpload->getClientOriginalExtension(),
+            'size' => Storage::size($path),
+            'url'  => Storage::url($path),
+            'user_id' => $request->user()->id
+        ]);
 
         return new Medias($media);
     }

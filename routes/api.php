@@ -18,10 +18,11 @@ use App\Http\Resources\User as UserResource;
 Route::post('register', 'AuthController@register');
 Route::post('login', 'AuthController@login');
 
+Route::apiResource('media' , 'MediaController');
+Route::apiResource('gallery', 'GalleryController');
+
 Route::middleware('auth:api')->group(function () {
 	Route::get('/user', function (Request $request) {
     	return new UserResource($request->user());
 	});
-
-	Route::apiResource('media' , 'MediaController');
 });

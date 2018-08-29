@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>Laravel</title>
 
@@ -80,6 +81,14 @@
             <div class="content">
                 <div class="title m-b-md">
                     Laravel
+                </div>
+
+                <div>
+                    <form action="{{ url('/upload') }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <input type="file" class="form-control-file" name="fileToUpload" id="exampleInputFile" aria-describedby="fileHelp">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
                 </div>
 
                 <div class="links">

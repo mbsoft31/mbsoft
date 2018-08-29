@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Storage;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +13,23 @@
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::post('/upload', function(){
+	request()->validate([
+            'fileToUpload' => 'required|file|max:1024',
+        ]);
+ 
+    $fileName = "fileName".time().'.'.request()->fileToUpload->getClientOriginalExtension();
+
+    $path = request()->fileToUpload->storeAs('public/logos',$fileName);
+
+    return [
+    	'name' => $fileName,
+    	'type' => request()->fileToUpload->getClientOriginalExtension(),
+    	'size' => Storage::size($path),
+    	'url'  => Storage::url($path)
+    ];
 });
 
 Auth::routes();
