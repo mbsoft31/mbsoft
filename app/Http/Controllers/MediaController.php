@@ -31,7 +31,7 @@ class MediaController extends Controller
     {
         //
         $request->validate([
-            'fileToUpload' => 'required|file|max:1024',
+            'file' => 'required|file|max:1024',
         ]);
      
         $fileName = "fileName".time().'.'.$request->fileToUpload->getClientOriginalExtension();
@@ -45,6 +45,7 @@ class MediaController extends Controller
             'url'  => Storage::url($path),
             'user_id' => $request->user()->id
         ]);
+
 
         return new Medias($media);
     }
