@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Media;
-use App\Http\Resources\Medias;
+use App\Http\Resources\Media as Medias;
 use Illuminate\Support\Facades\Storage;
 
 class MediaController extends Controller
@@ -18,7 +18,7 @@ class MediaController extends Controller
     {
         $medias = Media::all();
 
-        return new Medias($medias);
+        return Medias::collection($medias);
     }
 
     /**

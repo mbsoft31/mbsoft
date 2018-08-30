@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Gallery;
-use App\Http\Resources\Galleries;
+use App\Http\Resources\Gallery as Galleries;
 
-class Gallery extends Controller
+class GalleryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class Gallery extends Controller
     public function index()
     {
         $galleries = Gallery::all();
-        return new Galleries($galleries);
+        return Galleries::collection($galleries);
     }
 
     /**
@@ -29,7 +29,7 @@ class Gallery extends Controller
     {
         
         $gallery = Gallery::create([
-            'name' => $request->name,
+            'description' => $request->description,
             'user_id' => $request->user()->id
         ]);
 
@@ -60,11 +60,11 @@ class Gallery extends Controller
     public function update(Request $request, $id)
     {
         $gallery = Gallery::where('id', $id)->update([
-            'name' => $request->name,
+            'description' => $request->description,
             'user_id' => $request->user()->id
         ]);
 
-        $gallery->medias()->sync($request->medias);
+        Gallery::find($gallery)->medias()->sync($request->medias);
 
         return new Galleries(Gallery::find($gallery));
     }
