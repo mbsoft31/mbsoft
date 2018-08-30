@@ -9,7 +9,7 @@ class UserDetail extends Model
     
 	protected $fillable = [
 		'key',
-		'value'
+		'value',
 		'user_id'
 	];
 

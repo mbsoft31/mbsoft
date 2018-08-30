@@ -17,8 +17,8 @@ class CreateAddressUserTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('address_id')->unsigned();
-            $table->date('from');
-            $table->date('to');
+            $table->date('from')->nullable();
+            $table->date('to')->nullable();
             $table->timestamps();
         });
     }

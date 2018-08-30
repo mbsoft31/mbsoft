@@ -3,8 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Media as Medias;
 
-class User extends JsonResource
+class Gallery extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,12 +16,10 @@ class User extends JsonResource
     public function toArray($request)
     {
         return [
-            'full_name' => $this->name,
-            'email' => $this->email,
-            'roles' => $this->roles,
-            'metas' => $this->metas,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'id' => $this->id,
+            'description' => $this->description,
+            'user' => $this->user,
+            'medias' => Medias::collection($this->medias)
         ];
     }
 }

@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Gallery;
-use App\Http\Resources\Gallery as Galleries;
+use App\Http\Resources\Screen as Screens;
+use App\Screen;
 
-class GalleryController extends Controller
+class ScreenController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        $galleries = Gallery::all();
-        return Galleries::collection($galleries);
+        $screens = Screen::all();
+        return Screens::collection($screens);
     }
 
     /**
@@ -27,15 +27,15 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $gallery = Gallery::create([
-            'description' => $request->description,
+        $screen = Screen::create([
+            'name' => $request->name,
+            'resoulution' => $request->resoulution,
+            'location' => $request->location,
+            'gallery_id' => $request->gallery_id,
             'user_id' => $request->user()->id
         ]);
 
-        $gallery->medias()->sync($request->medias);
-
-        return new Galleries($gallery);
+        return new Screens($screen);
     }
 
     /**
@@ -44,10 +44,10 @@ class GalleryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Screen $screen)
     {
-        $gallery = Gallery::find($id);
-        return new Galleries($gallery);
+        //$screen = Screen::find($id);
+        return new Screens($screen);
     }
 
     /**
@@ -57,18 +57,18 @@ class GalleryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Screen $screen)
     {
-        $gallery = Gallery::find($id);
-        $gallery->update([
-            'description' => $request->description,
+        //$screen = Screen::find($id);
+        $screen->update([
+            'name' => $request->name,
+            'resoulution' => $request->resoulution,
+            'location' => $request->location,
+            'gallery_id' => $request->gallery_id,
             'user_id' => $request->user()->id
         ]);
 
-        
-        $gallery->medias()->sync($request->medias);
-
-        return new Galleries($gallery);
+        return new Screens($screen);
     }
 
     /**
@@ -77,10 +77,10 @@ class GalleryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Screen $screen)
     {
-        $gallery = Gallery::where('id', $id)->delete();
-
-        return new Galleries($gallery);
+        //$screen = Screen::find($id);
+        $screen->delete();
+        return new Screens($screen);
     }
 }

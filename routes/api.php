@@ -20,6 +20,7 @@ Route::post('login', 'AuthController@login');
 
 Route::apiResource('media' , 'MediaController');
 Route::apiResource('gallery', 'GalleryController');
+Route::apiResource('screen', 'ScreenController');
 
 Route::middleware('auth:api')->group(function () {
 	Route::get('/user', function (Request $request) {
