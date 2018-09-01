@@ -2,6 +2,7 @@
 use Illuminate\Support\Facades\Storage;
 use App\Media;
 use App\Http\Resources\Media as Medias;
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,7 +21,7 @@ Route::get('/test', function () {
     return view('test');
 });
 
-Route::post('/upload', function(){
+Route::post('/upload', function(Request $request){
 	$request->validate([
         'file' => 'required|file|max:1024',
     ]);
@@ -34,18 +35,10 @@ Route::post('/upload', function(){
         'type' => $request->fileToUpload->getClientOriginalExtension(),
         'size' => Storage::size($path),
         'url'  => Storage::url($path),
-        'user_id' => $request->user()->id
+        //'user_id' => $request->user()->id
     ]);
 
-    dd([
-            'name' => $fileName,
-            'type' => $request->fileToUpload->getClientOriginalExtension(),
-            'size' => Storage::size($path),
-            'url'  => Storage::url($path),
-            'user_id' => $request->user()->id
-        ]);
-
-    return new Medias($media);
+    return $media;
 });
 
 Auth::routes();

@@ -11,7 +11,8 @@ let tailwindcss = require('tailwindcss');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js');
+mix.js('resources/assets/js/app.js', 'public/js')
+	.js('resources/assets/js/assets/collapse.js', 'public/js');
 mix.sass('resources/assets/sass/app.scss', 'public/css')
   .options({
     processCssUrls: false,

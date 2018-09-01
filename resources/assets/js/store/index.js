@@ -7,6 +7,7 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
+        sidebarOpen: false,
     	auth:{
     		token: null,
     		type: null,
@@ -19,13 +20,20 @@ const store = new Vuex.Store({
     	}
     },
     mutations: {
+        toggle_sidebar(state){
+            state.sidebarOpen = !state.sidebarOpen
+        },
     	store_session: (state, payload) => {
     		state.auth.token = payload.access_token
     		state.auth.type = payload.token_type
     		state.auth.expires = payload.expires_in
-    	}
+    	},
+
     },
     actions: {
+        toggle_sidebar({ commit, state }){
+            commit('toggle_sidebar')
+        }
     }
 });
 
